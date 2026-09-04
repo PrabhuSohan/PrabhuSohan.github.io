@@ -270,7 +270,7 @@ And the Last Part of the Expectation in 5c can't be simplified to a KL divergenc
 Moreover, The reason I showcased this instead of jumping directly to the result showcased in the paper is to make it more intuitive as to why the KL divergences  show up. We can now write all the expectations together under the entire distribution q by re-integrating the missing variables  as they can be marginalised if needed by doing the same trick of integrating out. So 5c becomes the following when we combine each intermediate stage.
 
 $$\begin{aligned}
-	&\mathbb{E}_{q(x_{T} \mid x_{0})} \left[D_{KL}(q(x_{T} \mid x_{0}) \mid\mid p(x_{T})) \right] + \mathbb{E}_{q(x_{t} \mid x_{0})}\left[\sum_{t > 1}  D_{KL}(q(x_{t-1}\mid x_{t},x_{0})\mid \mid p_{\theta}(x_{t-1} \mid x_{t})) \right] - \mathbb{E}_{q(x_{1} \mid x_{0})}\left[- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \;\right] \\
+	&\mathbb{E}_{q(x_{T} \mid x_{0})} \left[D_{KL}(q(x_{T} \mid x_{0}) \mid\mid p(x_{T})) \right] + \mathbb{E}_{q(x_{t} \mid x_{0})}\left[\sum_{t > 1}  D_{KL}(q(x_{t-1}\mid x_{t},x_{0})\mid \mid p_{\theta}(x_{t-1} \mid x_{t})) \right] + \mathbb{E}_{q(x_{1} \mid x_{0})}\left[- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \;\right] \\
 	&= \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[D_{KL}(q(x_{T} \mid x_{0}) \mid\mid p(x_{T})) + \sum_{t > 1}  D_{KL}(q(x_{t-1}\mid x_{t},x_{0})\mid \mid p_{\theta}(x_{t-1} \mid x_{t}))\; - \log\left( p_{\theta}(x_{0} \mid x_{1}) \right)\right]
 \end{aligned} (5f)
 $$
@@ -281,7 +281,7 @@ Moving on we need to find the distribution of   $$q(x_{t-1}\mid x_{t},x_{0})$$. 
 
 $$
 \begin{aligned}
-	 &q(x_{t-1}\mid x_{t},x_{0})  =  q(x_{t-1} \mid x_{t}) = \frac{q(x_{t}\mid x_{t-1}) \cdot q(x_{t-1}\mid x_{0})}{q(x_{t}\mid x_{0})} \\ \\
+	 &q(x_{t-1}\mid x_{t},x_{0})   = \frac{q(x_{t}\mid x_{t-1}) \cdot q(x_{t-1}\mid x_{0})}{q(x_{t}\mid x_{0})} \\ \\
 	 
 \end{aligned}
 $$
