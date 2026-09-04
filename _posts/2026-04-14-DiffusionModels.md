@@ -492,7 +492,20 @@ $$
 \nabla_{\theta}(\left\lvert  \left\lvert (\epsilon-\epsilon_{\theta})  \right\rvert   \right\rvert^2)
 $$
 
-#### Training Loop
+## Training and Sampling
+
+For Training and Sampling The following Algorithms can be followed from the DDPM paper.
+
+![[Pasted image 20260823211703.png]]
+
+### Conclusion of Pt 1
+
+To conclude, we took a journey through understanding the diffusion process to ELBO and then unravelling KL divergences to put it all together for the gradient objective. For me it was an exciting process discovering how it all works through understanding the underlying foundational building blocks. In the next Part I will be working through how I implemented the PyTorch Model and performed training as well as showing the Loss graph and FID scores. 
+
+## References
+- DDPM https://arxiv.org/abs/2006.11239
+- Probability and Stats https://www.deeplearningbook.org/contents/prob.html
+- Kullback-Leibler divergence for the normal distribution https://statproofbook.github.io/P/norm-kl
 
 
 {% endraw %} 
