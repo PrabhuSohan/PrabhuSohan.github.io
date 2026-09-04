@@ -56,7 +56,7 @@ $$
 \end{aligned}
 $$
 
-- 1) states that it is the expectation taken with respect to destribution q(x). This is needed to take expectations when more than one variable involved.
+- 1) states that it is the expectation taken with respect to distribution q(x). This is needed to take expectations when more than one variable involved.
 - 2) states the notation used by the DDPM paper to represent joint probability distributions.
 - 3) states the formula for Kullback-Leibler Divergence which measures the divergences between two probability distribution.
 
@@ -301,7 +301,7 @@ $$
 	&\mathcal{N}(x;\mathbf{\mu},\Sigma) = \frac{1}{ (2\pi)^{k/2} \mid \Sigma \mid ^{1/2} } \exp(-\frac{1}{2} \cdot(x-\mu)^T)\Sigma^{-1}(x-\mu))\\ \\
 	&\text{using the following facts} \quad \Sigma = \sigma^2I,\quad \lvert \Sigma  \rvert = \sigma^{2k}  \quad \text{and} \quad\lvert \lvert x-\mu \rvert  \rvert ^{2} = (x-\mu)^T(x-\mu)  =  \sum_{i=0}^k(x_{i} -\mu_{i})^2\\ 
 	&\mathcal{N}(x;\mathbf{\mu},\Sigma) = \frac{1}{\sqrt{ (2\pi\sigma^2)^k  }} \exp\left( -\frac{\lvert \lvert x-\mu \rvert  \rvert^2 }{2\sigma^2} \right) = \prod_{i=0}^{k} \frac{1}{\sqrt{ 2\pi \sigma^2 }}\exp\left( -\frac{(x_{i}-\mu_{i})^2}{2\sigma^2} \right) \\ \\
-	&\text{ we can use this relation to just focus on writing it as a single guassian for simplicity } \\ \\
+	&\text{ we can use this relation to just focus on writing it as a single gaussian for simplicity } \\ \\
 	&\mathcal{N}(x;\mathbf{\mu},\Sigma) =  \frac{1}{\sqrt{ 2\pi \sigma^2 }}\exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) 
 \end{aligned}
 $$
@@ -452,7 +452,7 @@ $$
 \end{aligned}
 $$
 
-Here $$\epsilon_{\theta}$$ is the noise the model predicts for the reverse process and depends $$\epsilon$$,$$x_{0},x_{t}$$. Specifically this reparametrisation to handle the stochastic problem in backpropgation.
+Here $$\epsilon_{\theta}$$ is the noise the model predicts for the reverse process and depends $$\epsilon$$,$$x_{0},x_{t}$$. Specifically this reparametrisation to handle the stochastic problem in backpropogation.
 
 $$
 \small{
