@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Diffusion Models"
-date: 2026-08-09
+date: 2026-06-09
 categories: [machine-learning, diffusion-models]
 tags: [diffusion, ddpm, pytorch, maths]
 math: true
@@ -103,7 +103,7 @@ D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0})) \
 \end{aligned} 
 $$
 
-This fact then can be used to relate   $$\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$$   with ELBO and KL divergence as follows by rearranging
+This fact then can be used to relate   $$\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]$$   with ELBO and KL divergence as follows by rearranging
 
 $$
 \begin{aligned} \\ \\
@@ -113,7 +113,7 @@ $$
 \end{aligned} \qquad (3d)
 $$
 
-The gap between  $$\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$$   and ELBO is defined as the tightness of the bound. Additionally since the KL Divergence determines the divergence between the posterior (Q) and prior(P) distributions the tighter the bound the better it approximates between the two distributions. This can be done by Maximising the ELBO. However we can do a trick to instead minimise the bound by multiplying by a negative sign. This makes it easier in PyTorch to Train 
+The gap between  $$\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]$$   and ELBO is defined as the tightness of the bound. Additionally since the KL Divergence determines the divergence between the posterior (Q) and prior(P) distributions the tighter the bound the better it approximates between the two distributions. This can be done by Maximising the ELBO. However we can do a trick to instead minimise the bound by multiplying by a negative sign. This makes it easier in PyTorch to Train 
 
 $$
 \begin{aligned} \\
@@ -122,7 +122,7 @@ $$
 \end{aligned} \qquad (3e)
 $$
 
-This is the same as the Equation 3 in the Denoising Diffusion Probabilistic Model Paper. We can then use Equation 1b and 2a to write the parts of the ELBO as follows
+This is the same as the Equation 3 in the Denoising Diffusion Probabilistic Model Paper. We can then use Equation 1b and 2a to write the parts of the -ELBO as follows
 
 $$
 \begin{aligned} \\
@@ -134,7 +134,7 @@ $$
 $$
 
 #### The Reparametrisation Trick
-The authors of the Auto-encoding Variational Bayes , suggest a Trick to solve the problem when backpropogating through the network. Since the ELBO is an Expectation taken w.r.t the distribution $$q(x_{1:T} \mid x_{0})$$ , calculating  gradients  for the parameters associated  with prior distribution are  difficult to obtain but in the case of continuous latent variables they suggest reparametrisation. This is because of the stochastic nature of the Latents which prevents backpropgation and gradient calculation of the node in the graph. 
+The authors of the Auto-encoding Variational Bayes , suggest a Trick to solve the problem when backpropogating through the network. Since the -ELBO is an Expectation taken w.r.t the distribution $$q(x_{1:T} \mid x_{0})$$ , calculating  gradients  for the parameters associated  with prior distribution are  difficult to obtain but in the case of continuous latent variables they suggest reparametrisation. This is because of the stochastic nature of the Latents which prevents backpropgation and gradient calculation of the node in the graph. 
 
 This can be done by introducing a new random variable $$\epsilon \sim \mathcal{N}(0,I)$$ and this can then be used  as follows for equation 2b: 
 
@@ -215,7 +215,7 @@ $$
 \begin{aligned}
 	&\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log(  p(x_{T})) - \log(q(x_{1} \mid x_{0}))- \log\left(\frac{1}{q(x_{T} \mid x_{0})}\right) - \sum_{t > 1} \left[\log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t-1}\mid x_{t},x_{0})})\right] - \log\left( \frac{p_{\theta}(x_{0} \mid x_{1})}{ q(x_{1} \mid x_{0})} \right) \; \right] \\
 &=\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log\left(   \frac{p(x_{T})}{q(x_{T} \mid x_{0})} \right) - \sum_{t > 1} \left[\log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t-1}\mid x_{t},x_{0})})\right] - \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \; \right]\\
-&=\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log\left(   \frac{p(x_{T})}{q(x_{T} \mid x_{0})} \right) \right] + \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[\sum_{t > 1} \left[\log(\frac{ q(x_{t-1}\mid x_{t},x_{0})}{p_{\theta}(x_{t-1} \mid x_{t})})\right]\right] - \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \;\right] \\ 
+&=\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log\left(   \frac{p(x_{T})}{q(x_{T} \mid x_{0})} \right) \right] + \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[\sum_{t > 1} \left[\log(\frac{ q(x_{t-1}\mid x_{t},x_{0})}{p_{\theta}(x_{t-1} \mid x_{t})})\right]\right] + \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \;\right] \\ 
 \end{aligned} (5c)
 $$
 
@@ -466,11 +466,11 @@ $$
 &= \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}}{1-\bar{\alpha_{t}}} + \frac{\beta_{t}x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right)\\
 
 &= \left( \frac{\alpha_{t}(1-\bar{\alpha_{t-1}})x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }} + \frac{\beta_{t}x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right) \\
-&=\left( \frac{(\alpha_{t}-\bar{\alpha_{t}}-1+\alpha_{t})x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }} - \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right)\\
-&=\frac{-1}{\sqrt{ \alpha_{t} }} \left(x_{t}+ \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) \\ \\ 
+&=\left( \frac{(\alpha_{t}-\bar{\alpha_{t}}+1-\alpha_{t})x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }} - \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right)\\
+&=\frac{1}{\sqrt{ \alpha_{t} }} \left(x_{t}+ \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) \\ \\ 
 \text{we can substitue into  6a now  } \\
-&=\frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert  \frac{-1}{\sqrt{ \alpha_{t} }} \left(x_{t}+ \frac{\beta_{t}\epsilon_{\theta}}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) - \frac{-1}{\sqrt{ \alpha_{t} }} \left(x_{t}+ \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) \right\rvert   \right\rvert^2 \right] \\
-&=\frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert  \frac{-1}{\sqrt{ \alpha_{t} }} \left(x_{t} -x_{t} + \frac{\beta_{t}\epsilon_{\theta}}{\sqrt{ 1-\bar{\alpha_{t}} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) \right\rvert   \right\rvert^2 \right] \\
+&=\frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert  \frac{1}{\sqrt{ \alpha_{t} }} \left(x_{t}+ \frac{\beta_{t}\epsilon_{\theta}}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) - \frac{1}{\sqrt{ \alpha_{t} }} \left(x_{t}+ \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) \right\rvert   \right\rvert^2 \right] \\
+&=\frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert  \frac{1}{\sqrt{ \alpha_{t} }} \left(x_{t} -x_{t} + \frac{\beta_{t}\epsilon_{\theta}}{\sqrt{ 1-\bar{\alpha_{t}} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }}\right) \right\rvert   \right\rvert^2 \right] \\
 &=\frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert \frac{\beta_{t}}{\sqrt{ \alpha_{t} }\cdot\sqrt{ 1-\bar{\alpha_{t}} }}(\epsilon-\epsilon_{\theta})  \right\rvert   \right\rvert^2 \right] \\
 &=\frac{\beta_{t}^2}{2\sigma^2 \alpha_{t} (1-\bar{\alpha}_{t})}\left\lvert  \left\lvert (\epsilon-\epsilon_{\theta})  \right\rvert   \right\rvert^2 
 	
