@@ -496,7 +496,7 @@ $$
 
 For Training and Sampling The following Algorithms can be followed from the DDPM paper.
 
-![[./_posts/Sample.png]]
+![](/assets/images/Sample.png)
 
 ### Conclusion of Pt 1
 
@@ -506,6 +506,6 @@ To conclude, we took a journey through understanding the diffusion process to EL
 - DDPM https://arxiv.org/abs/2006.11239
 - Probability and Stats https://www.deeplearningbook.org/contents/prob.html
 - Kullback-Leibler divergence for the normal distribution https://statproofbook.github.io/P/norm-kl
-
+- An Introduction to Variational Autoencoders https://arxiv.org/abs/1906.02691
 
 {% endraw %} 
