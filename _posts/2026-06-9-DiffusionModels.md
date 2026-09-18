@@ -496,7 +496,14 @@ $$
 
 For Training and Sampling The following Algorithms can be followed from the DDPM paper.
 
-![](/assets/images/Sample.png)
+<figure style="margin: 2rem auto; max-width: 720px;">
+  <img src="/assets/images/Sample.png"
+       alt="Algorithm 1 (training) and Algorithm 2 (sampling) from the DDPM paper"
+       width="1600" height="620"
+       style="display: block; width: 100%; height: auto;
+              background: #fff; padding: 1rem; box-sizing: border-box;
+              border-radius: 4px;">
+</figure>
 
 ### Conclusion of Pt 1
 
